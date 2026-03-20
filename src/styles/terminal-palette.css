@@ -1,0 +1,17 @@
+/* ─── Terminal Colour Tokens ─── */
+
+:root {
+  --surface: #0a0a0a;
+  --surface-raised: #111111;
+  --phosphor: #00ff41;
+  --phosphor-dim: rgba(0, 255, 65, 0.3);
+  --amber: #ffb000;
+  --amber-dim: rgba(255, 176, 0, 0.3);
+  --red: #ff3333;
+  --red-dim: rgba(255, 51, 51, 0.3);
+  --grey: #333333;
+  --grey-dim: #1a1a1a;
+  --text: #00ff41;
+  --text-dim: #338033;
+  --border: #333333;
+}
