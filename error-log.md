@@ -72,3 +72,10 @@
     - **Mitigation:** Pin Solana signer version. Monitor Ledger SDK releases for fix. Cannot upgrade without breaking changes.
 
 ---
+
+## Session: 2026-03-20 (continued — navigation, fonts, Docker)
+
+No new errors. All changes (nav, font bundling, Docker, settings integration, storage monitor)
+passed typecheck, lint, 59 unit tests, and 21 E2E tests on first attempt.
+
+---
