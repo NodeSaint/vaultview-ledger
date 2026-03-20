@@ -4,15 +4,18 @@ import { useEffect } from "react";
 import { BrowserGuard, ConnectButton, DeviceStatus } from "@/components/device";
 import { BalanceGrid, AllocationChart, DCATracker } from "@/components/portfolio";
 import { Prompt, Ticker } from "@/components/terminal";
-import { useDevice, usePrices, usePortfolio } from "@/hooks";
+import type { useDevice } from "@/hooks/useDevice";
+import type { usePrices } from "@/hooks/usePrices";
+import type { usePortfolio } from "@/hooks/usePortfolio";
 
-export function Dashboard() {
-  const device = useDevice();
-  const { prices, isLoading: pricesLoading, isUsingFallback, lastFetched } = usePrices();
-  const portfolio = usePortfolio({
-    addresses: device.addresses,
-    prices,
-  });
+interface DashboardProps {
+  device: ReturnType<typeof useDevice>;
+  priceState: ReturnType<typeof usePrices>;
+  portfolio: ReturnType<typeof usePortfolio>;
+}
+
+export function Dashboard({ device, priceState, portfolio }: DashboardProps) {
+  const { prices, isLoading: pricesLoading, isUsingFallback, lastFetched } = priceState;
 
   const { deriveAddresses } = device;
   const { fetchBalances } = portfolio;

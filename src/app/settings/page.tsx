@@ -1,19 +1,24 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { Shell, Prompt } from "@/components/terminal";
 import { loadSettings, saveSettings, resetSettings, DEFAULT_SETTINGS } from "@/lib/settings";
 import { validateRpcUrl } from "@/lib/security";
+import { getVaultViewStorageUsage } from "@/lib/storage-monitor";
 import type { Settings } from "@/lib/schemas";
+import type { StorageUsage } from "@/lib/storage-monitor";
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+  const [storageUsage, setStorageUsage] = useState<StorageUsage | null>(null);
   const [saved, setSaved] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [rpcTestResults, setRpcTestResults] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setSettings(loadSettings());
+    setStorageUsage(getVaultViewStorageUsage());
   }, []);
 
   const handleSave = useCallback(() => {
@@ -207,6 +212,24 @@ export default function SettingsPage() {
           </label>
         </section>
 
+        {/* Storage */}
+        <section>
+          <h2 className="mb-2 text-amber">─── STORAGE ───</h2>
+          {storageUsage && (
+            <div className="text-text-dim">
+              <span>VaultView data: </span>
+              <span className={storageUsage.isNearLimit ? "text-red" : "text-phosphor"}>
+                {storageUsage.usedKb} KB
+              </span>
+              {storageUsage.isNearLimit && (
+                <span className="ml-2 text-red">
+                  WARNING: Approaching localStorage limit. Export and purge old DCA entries.
+                </span>
+              )}
+            </div>
+          )}
+        </section>
+
         {/* Actions */}
         <div className="flex gap-3 border-t border-border pt-4">
           <button
@@ -221,12 +244,12 @@ export default function SettingsPage() {
           >
             [RESET TO DEFAULTS]
           </button>
-          <a
+          <Link
             href="/"
             className="border border-border px-4 py-1 text-text-dim hover:text-phosphor"
           >
             [BACK]
-          </a>
+          </Link>
           {saved && (
             <span className="py-1 text-phosphor">Settings saved.</span>
           )}
