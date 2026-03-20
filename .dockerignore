@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+*.md
+!README.md
+!CONTRIBUTING.md
+!CODE_OF_CONDUCT.md
+!LICENSE
+.env*
+.claude
+memory
+coverage
+playwright-report
+test-results
+e2e

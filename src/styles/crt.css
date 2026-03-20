@@ -1,0 +1,76 @@
+/* ─── CRT / Terminal Aesthetic ─── */
+
+/* Scanline overlay — applied to the shell wrapper */
+.crt-scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Phosphor glow on text — applied to the shell wrapper */
+.crt-glow {
+  text-shadow:
+    0 0 4px var(--phosphor),
+    0 0 12px var(--phosphor-dim);
+}
+
+/* Subtle screen flicker */
+.crt-flicker {
+  animation: flicker 8s infinite;
+}
+
+@keyframes flicker {
+  0%,
+  97%,
+  100% {
+    opacity: 1;
+  }
+  97.5% {
+    opacity: 0.95;
+  }
+  98% {
+    opacity: 1;
+  }
+  98.5% {
+    opacity: 0.97;
+  }
+}
+
+/* Respect reduced motion — kill all CRT effects */
+@media (prefers-reduced-motion: reduce) {
+  .crt-scanlines::before {
+    display: none;
+  }
+  .crt-flicker {
+    animation: none;
+  }
+  .crt-glow {
+    text-shadow: none;
+  }
+}
+
+/* High contrast override */
+@media (prefers-contrast: more) {
+  :root {
+    --phosphor: #ffffff;
+    --phosphor-dim: #cccccc;
+    --amber: #ffdd00;
+    --surface: #000000;
+    --border: #666666;
+  }
+  .crt-scanlines::before {
+    display: none;
+  }
+  .crt-glow {
+    text-shadow: none;
+  }
+}
