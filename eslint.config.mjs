@@ -4,6 +4,15 @@ import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 
 export default tseslint.config(
+  {
+    ignores: [
+      ".next/",
+      "node_modules/",
+      "dist/",
+      "coverage/",
+      "next-env.d.ts",
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   {
@@ -13,7 +22,12 @@ export default tseslint.config(
         ...globals.node,
       },
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: [
+            "eslint.config.mjs",
+            "postcss.config.mjs",
+          ],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -30,7 +44,4 @@ export default tseslint.config(
       "@typescript-eslint/consistent-type-imports": "error",
     },
   },
-  {
-    ignores: [".next/", "node_modules/", "dist/", "coverage/"],
-  }
 );

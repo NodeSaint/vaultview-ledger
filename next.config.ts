@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  headers: async () => [
+  headers: () => Promise.resolve([
     {
       source: "/(.*)",
       headers: [
@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
         },
       ],
     },
-  ],
+  ]),
 };
 
 export default nextConfig;
